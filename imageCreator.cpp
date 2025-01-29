@@ -1,74 +1,74 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-    FILE *fIn, *fOut;
     int width, height;
     int i, j;
     int val;
 
     if(argc != 3){
-        cout << "Missing arguments" << endl;
+        cout << "Argomenti insufficienti in chiamata di programma" << endl;
         return -1;
     }
 
-    fIn = fopen(argv[1], "r");
-    fOut = fopen(argv[2], "w");
+    ifstream fIn(argv[1]);
+    ofstream fOut(argv[2]);
 
-    if(fIn == NULL || fOut == NULL){
-        cout << "Error while opening the files" << endl;
+    if(!fIn|| !fOut){
+        cout << "Errore nell'apertura del file" << endl;
         return -1;
     }
 
-    fscanf(fIn, "%d, %d", &width, &height);
+    cout << "Loading..." << endl;
+
+    fIn >> width >> height;
 
     i = 0;
-    while(i < height && !feof(fIn)){
+    while(i < height){
         j = 0;
-        while(j < width && !feof(fIn)){
-            fscanf(fIn, "%d", &val);
+        while(j < width){
+            fIn >> val;
             switch(val){
                 case 0 ... 25: 
-                    fprintf(fOut, "@ ");
+                    fOut << "@ ";
                     break;
                 case 26 ... 50: 
-                    fprintf(fOut, "# ");
+                    fOut << "# ";
                     break;
                 case 51 ... 75: 
-                    fprintf(fOut, "%% ");
+                    fOut << "%% ";
                     break;
                 case 76 ... 100:
-                    fprintf(fOut, "* ");
+                    fOut << "* ";
                     break;
                 case 101 ... 125: 
-                    fprintf(fOut, "+ ");
+                    fOut << "+ ";
                     break;
                 case 126 ... 150: 
-                    fprintf(fOut, "= ");
+                    fOut << "= ";
                     break;
                 case 151 ... 175: 
-                    fprintf(fOut, "- ");
+                    fOut << "- ";
                     break;
                 case 176 ... 200: 
-                    fprintf(fOut, ": ");
+                    fOut << ": ";
                     break;
                 case 201 ... 225: 
-                    fprintf(fOut, ". ");
+                    fOut << ". ";
                     break;
                 case 226 ... 255: 
-                    fprintf(fOut, "  ");
+                    fOut << "  ";
                     break;
             }
             j++;
         }
-        fprintf(fOut, "\n");
+        fOut << endl;
         i++;
     }
 
-    fclose(fIn);
-    fclose(fOut);
-
+    cout << "Image successfully created" << endl;
     return 0;
 }
 
