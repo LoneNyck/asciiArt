@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
     int val;
 
     if(argc != 3){
-        cout << "Argomenti insufficienti in chiamata di programma" << endl;
+        cout << "Missing arguments" << endl;
         return -1;
     }
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     fOut = fopen(argv[2], "w");
 
     if(fIn == NULL || fOut == NULL){
-        cout << "Errore nell'apertura del file" << endl;
+        cout << "Error while opening the files" << endl;
         return -1;
     }
 
